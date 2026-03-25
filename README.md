@@ -1,73 +1,38 @@
-# React + TypeScript + Vite
+# GLITCH BIRD 🐦💥
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Психоделічний Flappy Bird з глітч-ефектами!
 
-Currently, two official plugins are available:
+## Що це?
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Класичний Flappy Bird, але з кожним набраним очком гра стає все більш "зламаною":
 
-## React Compiler
+- **Поворот екрану** — кожні 5-10 очок рівень повертається на 25-30°
+- **Глітч-ефекти** — кожні 1-2 секунди екран "лагає" (тремтіння, мерехтіння, інверсія кольорів)
+- **Психоделічний фон** — кольори постійно змінюються
+- **Ефект старого ТВ** — скан-лінії, шум, помилки сигналу
+- **Страшні повідомлення** — "ERROR 404: REALITY NOT FOUND", "ТИ НЕ ВИЙДЕШ" та інші
+- **RGB зсув каналів** — як на зламаному моніторі
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Як грати
 
-## Expanding the ESLint configuration
+- **Пробіл** або **клік** — стрибок
+- Уникай труб
+- Чим більше очок — тим більше божевілля!
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Запуск
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+cd flappy
+npm run dev -- --host :: --port 5173
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Технології
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+- React + TypeScript
+- Vite
+- CSS анімації + фільтри
+- localStorage (для майбутніх глітч-фіч)
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+## Частина франшизи "GLITCH GAMES"
+
+Ця гра — перша частина серії ігор з унікальними механіками. Секретний символ франшизи з'являється при правильному проходженні.
