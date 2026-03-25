@@ -514,12 +514,12 @@ function App() {
           <div
             key={pipe.id}
             className={`pipe-container ${glitchActive ? 'pipe-glitch' : ''}`}
-            style={{ left: pipe.x, top: 0, height: screenH }}
+            style={{ left: pipe.x, top: 0, bottom: 0 }}
           >
             <div className="pipe-top" style={{ height: pipe.topHeight }}>
               <div className="pipe-cap"></div>
             </div>
-            <div className="pipe-bottom" style={{ height: screenH - pipe.topHeight - pipe.gap }}>
+            <div className="pipe-bottom" style={{ top: pipe.topHeight + pipe.gap }}>
               <div className="pipe-cap"></div>
             </div>
           </div>
