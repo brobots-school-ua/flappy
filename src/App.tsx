@@ -218,17 +218,22 @@ function App() {
     return () => cancelAnimationFrame(psychedelicRef.current);
   }, [isStarted, isGameOver]);
 
-  // Keyboard
+  // Keyboard — Space to jump, Enter to restart
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.code === 'Space') {
         e.preventDefault();
         jump();
       }
+      if (e.code === 'Enter') {
+        e.preventDefault();
+        if (isGameOver) resetGame();
+        else if (!isStarted) jump();
+      }
     };
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [jump]);
+  }, [jump, isGameOver, isStarted]);
 
   // Main game loop
   useEffect(() => {
@@ -305,13 +310,13 @@ function App() {
   };
 
   return (
-    <div className="fullscreen-wrapper" onClick={jump}>
+    <div className={`fullscreen-wrapper ${(!isStarted || isGameOver) ? 'cursor-visible' : 'cursor-hidden'}`} onClick={jump}>
       {/* Psychedelic TV background — covers entire screen */}
       <div
         className="tv-background"
         style={{
-          opacity: isStarted ? 0.15 + glitchIntensity * 0.25 : 0.05,
-          filter: `hue-rotate(${hueShift}deg)`,
+          opacity: isStarted ? 0.3 + glitchIntensity * 0.4 : 0.1,
+          filter: `hue-rotate(${hueShift}deg) brightness(0.4) saturate(0.7)`,
           animationDuration: `${Math.max(2, 8 - glitchIntensity * 6)}s`,
         }}
       />
@@ -414,6 +419,9 @@ function App() {
             >
               {isGameOver ? 'TRY AGAIN' : 'START GAME'}
             </button>
+            {isGameOver && (
+              <p className="hint-text">Press Enter or Click to continue</p>
+            )}
             {!isGameOver && (
               <>
                 <p className="hint-text">Press Space or Tap</p>

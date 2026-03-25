@@ -19,8 +19,11 @@ html, body, #root {
   height: 100%;
   overflow: hidden;
   background: #000;
-  cursor: none;
 }
+
+/* Cursor hidden during gameplay, visible on menu/gameover */
+.cursor-hidden { cursor: none; }
+.cursor-visible { cursor: default; }
 
 /* ===== FULLSCREEN WRAPPER ===== */
 .fullscreen-wrapper {
@@ -31,7 +34,7 @@ html, body, #root {
   background: #0a0a0a;
 }
 
-/* ===== PSYCHEDELIC TV BACKGROUND ===== */
+/* ===== DARK PSYCHEDELIC TV BACKGROUND ===== */
 .tv-background {
   position: fixed;
   inset: -50%;
@@ -39,23 +42,23 @@ html, body, #root {
   height: 200%;
   z-index: 0;
   background:
-    radial-gradient(ellipse at 20% 50%, #ff00ff 0%, transparent 50%),
-    radial-gradient(ellipse at 80% 20%, #00ffff 0%, transparent 50%),
-    radial-gradient(ellipse at 50% 80%, #ff4400 0%, transparent 50%),
-    radial-gradient(ellipse at 30% 30%, #ffff00 0%, transparent 40%),
-    radial-gradient(ellipse at 70% 70%, #00ff00 0%, transparent 40%),
-    linear-gradient(45deg, #ff0066, #6600ff, #00ffcc, #ff6600, #ff0066);
+    radial-gradient(ellipse at 20% 50%, #2d0a3e 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 20%, #0a2e1a 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 80%, #1a0a2e 0%, transparent 50%),
+    radial-gradient(ellipse at 30% 30%, #0d3b0d 0%, transparent 40%),
+    radial-gradient(ellipse at 70% 70%, #1a1a2e 0%, transparent 40%),
+    linear-gradient(45deg, #0f0015, #0a1f0a, #15002a, #1a1a1a, #0f0015);
   background-size: 100% 100%;
-  animation: psychedelic-move 8s ease-in-out infinite;
+  animation: psychedelic-move 10s ease-in-out infinite;
   mix-blend-mode: screen;
   transition: opacity 0.5s;
 }
 
 @keyframes psychedelic-move {
   0% { transform: translate(0, 0) scale(1) rotate(0deg); }
-  25% { transform: translate(-5%, 3%) scale(1.1) rotate(5deg); }
-  50% { transform: translate(3%, -5%) scale(1) rotate(-3deg); }
-  75% { transform: translate(-3%, -3%) scale(1.15) rotate(3deg); }
+  25% { transform: translate(-5%, 3%) scale(1.1) rotate(3deg); }
+  50% { transform: translate(3%, -5%) scale(1) rotate(-2deg); }
+  75% { transform: translate(-3%, -3%) scale(1.15) rotate(2deg); }
   100% { transform: translate(0, 0) scale(1) rotate(0deg); }
 }
 
@@ -243,9 +246,9 @@ html, body, #root {
 .tear-slice {
   position: absolute;
   width: 100%;
-  background: rgba(0, 255, 255, 0.05);
-  border-top: 1px solid rgba(255, 255, 255, 0.15);
-  border-bottom: 1px solid rgba(255, 0, 64, 0.15);
+  background: rgba(30, 0, 50, 0.15);
+  border-top: 1px solid rgba(100, 50, 150, 0.2);
+  border-bottom: 1px solid rgba(0, 80, 40, 0.2);
 }
 
 /* ===== GLITCH BARS ===== */
@@ -263,9 +266,9 @@ html, body, #root {
   background: linear-gradient(
     90deg,
     transparent 0%,
-    rgba(255, 0, 64, 0.25) 15%,
-    rgba(0, 255, 255, 0.2) 50%,
-    rgba(0, 255, 65, 0.25) 85%,
+    rgba(80, 0, 120, 0.3) 15%,
+    rgba(0, 60, 30, 0.25) 50%,
+    rgba(40, 40, 40, 0.3) 85%,
     transparent 100%
   );
 }
@@ -519,7 +522,7 @@ html, body, #root {
   color: var(--glitch-green);
   border: 2px solid var(--glitch-green);
   border-radius: 4px;
-  cursor: none;
+  cursor: pointer;
   font-family: 'Courier New', monospace;
   letter-spacing: 3px;
   text-transform: uppercase;
