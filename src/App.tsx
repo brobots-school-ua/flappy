@@ -156,15 +156,35 @@ function App() {
     }
   }, [isStarted]);
 
-  // ROTATION: every 10 score, rotate 25-30 degrees
+  // ROTATION: every 10 score, random big rotation (like Geometry Dash)
+  // Can be upside down (180°), sideways (90°/270°), or any angle
   useEffect(() => {
     if (score > 0 && score % 10 === 0 && score !== lastRotationScore.current) {
       lastRotationScore.current = score;
-      const angle = 25 + Math.random() * 5;
+      // Pick random dramatic angle: 90, 180, 270, or wild random
+      const angles = [90, 180, 270, 45, 135, 225, 315];
+      const angle = angles[Math.floor(Math.random() * angles.length)];
       const direction = Math.random() > 0.5 ? 1 : -1;
       setRotation(prev => prev + angle * direction);
     }
   }, [score]);
+
+  // CHAOS MODE: after 80 score, rotation changes every second
+  const chaosIntervalRef = useRef<number>(0);
+  useEffect(() => {
+    if (!isStarted || isGameOver) {
+      clearInterval(chaosIntervalRef.current);
+      return;
+    }
+    if (score >= 80) {
+      chaosIntervalRef.current = window.setInterval(() => {
+        const chaosAngles = [90, -90, 180, -180, 45, -45, 135, -135, 60, -60, 120, -120];
+        const angle = chaosAngles[Math.floor(Math.random() * chaosAngles.length)];
+        setRotation(prev => prev + angle);
+      }, 1000);
+      return () => clearInterval(chaosIntervalRef.current);
+    }
+  }, [isStarted, isGameOver, score >= 80]);
 
   // GLITCH EFFECTS
   useEffect(() => {
@@ -382,7 +402,7 @@ function App() {
       <div
         className="tv-background"
         style={{
-          opacity: isStarted ? 0.35 + glitchIntensity * 0.35 : 0.15,
+          opacity: isStarted ? 0.55 + glitchIntensity * 0.3 : 0.35,
           filter: `hue-rotate(${hueShift}deg)`,
           animationDuration: `${Math.max(2, 8 - glitchIntensity * 6)}s`,
         }}

@@ -18,7 +18,7 @@ html, body, #root {
   width: 100%;
   height: 100%;
   overflow: hidden;
-  background: #1a0045;
+  background: #2a0070;
 }
 
 /* Cursor hidden during gameplay, visible on menu/gameover */
@@ -31,7 +31,7 @@ html, body, #root {
   height: 100vh;
   position: relative;
   overflow: hidden;
-  background: linear-gradient(180deg, #2e0070 0%, #1a0045 40%, #102040 100%);
+  background: linear-gradient(180deg, #4a00b0 0%, #2a0070 40%, #1a3060 100%);
 }
 
 /* ===== BROKEN TV STRIPE BACKGROUND ===== */
@@ -41,23 +41,23 @@ html, body, #root {
   z-index: 0;
   background: repeating-linear-gradient(
     0deg,
-    #0a0020 0px,
-    #330060 3px,
-    #0a0020 6px,
-    #154025 9px,
-    #0a0020 12px,
-    #400015 15px,
-    #0a0020 18px,
-    #003355 21px,
-    #0a0020 24px,
-    #333300 27px,
-    #0a0020 30px,
-    #150040 33px,
-    #0a0020 36px,
-    #004020 39px,
-    #0a0020 42px,
-    #400020 45px,
-    #0a0020 48px
+    #150035 0px,
+    #5500a0 3px,
+    #150035 6px,
+    #206838 9px,
+    #150035 12px,
+    #660022 15px,
+    #150035 18px,
+    #005588 21px,
+    #150035 24px,
+    #555500 27px,
+    #150035 30px,
+    #220066 33px,
+    #150035 36px,
+    #006633 39px,
+    #150035 42px,
+    #660033 45px,
+    #150035 48px
   );
   animation: tv-scroll 3s linear infinite;
   transition: opacity 0.5s;
@@ -71,17 +71,17 @@ html, body, #root {
   background: repeating-linear-gradient(
     0deg,
     transparent 0px,
-    rgba(140, 0, 255, 0.3) 2px,
+    rgba(160, 0, 255, 0.5) 2px,
     transparent 4px,
-    rgba(0, 200, 60, 0.3) 6px,
+    rgba(0, 220, 80, 0.45) 6px,
     transparent 8px,
-    rgba(255, 0, 50, 0.25) 10px,
+    rgba(255, 20, 70, 0.4) 10px,
     transparent 12px,
-    rgba(0, 100, 255, 0.3) 14px,
+    rgba(0, 120, 255, 0.45) 14px,
     transparent 16px,
-    rgba(200, 200, 0, 0.2) 18px,
+    rgba(220, 220, 0, 0.35) 18px,
     transparent 20px,
-    rgba(255, 0, 200, 0.2) 22px,
+    rgba(255, 0, 220, 0.35) 22px,
     transparent 24px
   );
   animation: tv-scroll-reverse 2s linear infinite;
@@ -96,20 +96,20 @@ html, body, #root {
     0deg,
     transparent 0px,
     transparent 40px,
-    rgba(0, 255, 100, 0.12) 40px,
-    rgba(0, 255, 100, 0.12) 55px,
+    rgba(0, 255, 100, 0.25) 40px,
+    rgba(0, 255, 100, 0.25) 55px,
     transparent 55px,
     transparent 90px,
-    rgba(140, 0, 255, 0.12) 90px,
-    rgba(140, 0, 255, 0.12) 110px,
+    rgba(140, 0, 255, 0.25) 90px,
+    rgba(140, 0, 255, 0.25) 110px,
     transparent 110px,
     transparent 150px,
-    rgba(255, 40, 40, 0.1) 150px,
-    rgba(255, 40, 40, 0.1) 165px,
+    rgba(255, 40, 40, 0.2) 150px,
+    rgba(255, 40, 40, 0.2) 165px,
     transparent 165px,
     transparent 200px,
-    rgba(0, 80, 255, 0.12) 200px,
-    rgba(0, 80, 255, 0.12) 220px,
+    rgba(0, 80, 255, 0.25) 200px,
+    rgba(0, 80, 255, 0.25) 220px,
     transparent 220px,
     transparent 260px
   );
