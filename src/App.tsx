@@ -1,10 +1,9 @@
 import { useState, useEffect, useRef, useCallback } from 'react'
 import './App.css'
 
-const GRAVITY = 0.5;
+const GRAVITY = 0.4;
 const JUMP_STRENGTH = -7;
 const INITIAL_PIPE_SPEED = 3;
-const PIPE_GAP = 180;
 const PIPE_WIDTH = 70;
 const BIRD_WIDTH = 45;
 const BIRD_HEIGHT = 35;
@@ -13,6 +12,7 @@ interface PipeData {
   id: number;
   x: number;
   topHeight: number;
+  gap: number;
 }
 
 // Glitch messages — look like real system errors
@@ -284,6 +284,8 @@ function App() {
       const sH = screenHRef.current;
       const sW = screenWRef.current;
       const speed = currentPipeSpeed();
+      // Gap = 30% of screen height (min 200px) — plenty of space
+      const pipeGap = Math.max(200, Math.floor(sH * 0.3));
 
       // Update bird physics
       birdVelRef.current += GRAVITY;
@@ -292,11 +294,11 @@ function App() {
       // Floor/ceiling — bounce back, don't die
       if (birdYRef.current <= 0) {
         birdYRef.current = 0;
-        birdVelRef.current = 2; // push down
+        birdVelRef.current = 2;
       }
       if (birdYRef.current + BIRD_HEIGHT >= sH) {
         birdYRef.current = sH - BIRD_HEIGHT;
-        birdVelRef.current = -3; // bounce up a little
+        birdVelRef.current = -3;
       }
 
       // Move pipes
@@ -304,13 +306,23 @@ function App() {
         .map(p => ({ ...p, x: p.x - speed }))
         .filter(p => p.x + PIPE_WIDTH > 0);
 
-      // Collision detection (skip if first pipe not reached yet = invincible)
+      // Collision — ONLY die when bird overlaps with pipe body
       for (const pipe of pipesRef.current) {
-        const birdRight = birdXPos + BIRD_WIDTH;
-        const birdLeft = birdXPos;
+        const birdRight = birdXPos + BIRD_WIDTH - 5; // 5px forgiveness
+        const birdLeft = birdXPos + 5; // 5px forgiveness
+        const birdTop = birdYRef.current + 5; // 5px forgiveness
+        const birdBottom = birdYRef.current + BIRD_HEIGHT - 5;
 
-        if (birdRight > pipe.x && birdLeft < pipe.x + PIPE_WIDTH) {
-          if (birdYRef.current < pipe.topHeight || birdYRef.current + BIRD_HEIGHT > pipe.topHeight + PIPE_GAP) {
+        const pipeLeft = pipe.x;
+        const pipeRight = pipe.x + PIPE_WIDTH;
+
+        // Is bird horizontally inside pipe?
+        if (birdRight > pipeLeft && birdLeft < pipeRight) {
+          // Is bird hitting top pipe or bottom pipe?
+          const hitsTop = birdTop < pipe.topHeight;
+          const hitsBottom = birdBottom > pipe.topHeight + pipe.gap;
+
+          if (hitsTop || hitsBottom) {
             isGameOverRef.current = true;
             setIsGameOver(true);
             setBirdY(birdYRef.current);
@@ -319,22 +331,21 @@ function App() {
           }
         }
 
-        // Score — pipe passed bird
+        // Score — pipe center passed bird
         if (pipe.x + speed >= birdXPos && pipe.x < birdXPos) {
           scoreRef.current += 1;
-          firstPipePassed.current = true;
           setScore(scoreRef.current);
         }
       }
 
       // Spawn pipes
       pipeSpawnTimerRef.current += 1;
-      const spawnRate = Math.max(60, 100 - currentLevel() * 5);
+      const spawnRate = Math.max(70, 110 - currentLevel() * 5);
       if (pipeSpawnTimerRef.current >= spawnRate) {
-        const minHeight = 80;
-        const maxHeight = sH - PIPE_GAP - 80;
+        const minHeight = Math.floor(sH * 0.1);
+        const maxHeight = Math.floor(sH - pipeGap - sH * 0.1);
         const topHeight = Math.floor(Math.random() * (maxHeight - minHeight + 1)) + minHeight;
-        pipesRef.current.push({ id: Date.now(), x: sW, topHeight });
+        pipesRef.current.push({ id: Date.now(), x: sW, topHeight, gap: pipeGap });
         pipeSpawnTimerRef.current = 0;
       }
 
@@ -508,7 +519,7 @@ function App() {
             <div className="pipe-top" style={{ height: pipe.topHeight }}>
               <div className="pipe-cap"></div>
             </div>
-            <div className="pipe-bottom" style={{ height: screenH - pipe.topHeight - PIPE_GAP }}>
+            <div className="pipe-bottom" style={{ height: screenH - pipe.topHeight - pipe.gap }}>
               <div className="pipe-cap"></div>
             </div>
           </div>
