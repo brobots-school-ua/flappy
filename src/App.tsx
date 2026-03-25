@@ -42,6 +42,7 @@ function App() {
   const [score, setScore] = useState(0);
   const [isGameOver, setIsGameOver] = useState(false);
   const [isStarted, setIsStarted] = useState(false);
+  const [showWarning, setShowWarning] = useState(true);
 
   // Screen dimensions
   const [screenW, setScreenW] = useState(window.innerWidth);
@@ -269,6 +270,13 @@ function App() {
   // Keyboard
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
+      if (showWarning) {
+        if (e.code === 'Space' || e.code === 'Enter') {
+          e.preventDefault();
+          setShowWarning(false);
+        }
+        return;
+      }
       if (e.code === 'Space') {
         e.preventDefault();
         if (!isStarted) startGame();
@@ -282,7 +290,7 @@ function App() {
     };
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [jump, startGame, resetGame, isGameOver, isStarted]);
+  }, [jump, startGame, resetGame, isGameOver, isStarted, showWarning]);
 
   // MAIN GAME LOOP — runs on refs, updates state for rendering
   useEffect(() => {
@@ -391,6 +399,7 @@ function App() {
   };
 
   const handleClick = () => {
+    if (showWarning) return;
     if (isGameOver) resetGame();
     else if (!isStarted) startGame();
     else jump();
@@ -411,6 +420,39 @@ function App() {
       {/* Scanlines */}
       <div className="scanlines" />
       <div className="crt-vignette" />
+
+      {/* Warning screen */}
+      {showWarning && (
+        <div className="warning-screen">
+          <div className="warning-icon">&#9888;</div>
+          <h1 className="warning-title">УВАГА / WARNING</h1>
+          <div className="warning-text">
+            <p>Ця гра містить:</p>
+            <ul>
+              <li>Яскраві мигаючі кольори та стробоскопічні ефекти</li>
+              <li>Імітацію системних помилок (BSOD, краші)</li>
+              <li>Раптові повороти екрану та тремтіння</li>
+              <li>Інверсію кольорів та візуальний шум</li>
+            </ul>
+            <p className="warning-epilepsy">
+              Не рекомендується людям з епілепсією або чутливістю до світла.
+            </p>
+            <p className="warning-note">
+              Всі ефекти — частина геймплею. Ваш пристрій працює нормально.
+            </p>
+          </div>
+          <button
+            className="btn-warning-accept"
+            onClick={(e) => {
+              e.stopPropagation();
+              setShowWarning(false);
+            }}
+          >
+            ЗРОЗУМІЛО, ГРАТИ
+          </button>
+          <p className="warning-version">GLITCH BIRD v0.̷6̵.̸6̷ // UNSTABLE BUILD</p>
+        </div>
+      )}
 
       {/* Blue screen flash */}
       {blueScreen && (
